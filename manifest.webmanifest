@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "ぴたっと計算 — 割引・内税電卓",
+  "short_name": "ぴたっと計算",
+  "description": "割引後の支払額と消費税の内訳を、かんたんに。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f6ef",
+  "theme_color": "#164b3e",
+  "icons": [
+    { "src": "./assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "./assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#164b3e">
+  <meta name="description" content="割引後のお支払い額も、内税の内訳も。ぴたっと計算はお買い物に便利な、シンプルな割引・内税電卓です。">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ぴたっと計算">
+  <title>ぴたっと計算 | 割引・内税電卓</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="ぴたっと計算 ホーム"><img src="./assets/icon.svg" width="42" height="42" alt=""><span>ぴたっと計算<span class="brand-caption">毎日のお買い物に、ちょうどいい。</span></span></a>
+      <button id="install-button" class="install-button" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg><span>ホームに追加</span></button>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="page-title"><p class="eyebrow"><span></span>暮らしの小さな計算道具</p><h1 id="page-title">いくらになる？を、<br class="mobile-break"><span>ぴたっと。</span></h1><p>割引も、税金の内訳も。金額を入れるだけ。</p></section>
+      <div class="calculator-layout">
+        <section class="input-card" aria-label="計算する金額と条件">
+          <div class="mode-switch" role="group" aria-label="計算モード"><button type="button" data-mode="discount" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 17 10-10"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg>割引を計算</button><button type="button" data-mode="tax" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3ZM9 8h6m-6 4h6"/></svg>内税を計算</button></div>
+          <form id="calculator-form" novalidate>
+            <div class="field-heading"><label id="price-label" for="price">元の金額</label><div id="basis-switch" class="compact-switch" role="group" aria-label="入力金額の税区分"><button type="button" data-basis="included" aria-pressed="true">税込</button><button type="button" data-basis="excluded" aria-pressed="false">税抜</button></div><span id="tax-basis-label" class="soft-badge" hidden>税込</span></div>
+            <div class="amount-input"><input id="price" name="price" type="text" inputmode="numeric" value="10000" autocomplete="off" maxlength="16" aria-describedby="price-error" enterkeyhint="done"><span>円</span></div>
+            <p id="price-error" class="field-error" hidden></p>
+            <div id="discount-fields" class="discount-fields"><div class="field-heading"><label for="discount">割引率</label><span class="field-hint">0〜100%</span></div><div class="discount-row"><div class="amount-input discount-input"><input id="discount" name="discount" type="text" inputmode="decimal" value="20" autocomplete="off" maxlength="8" aria-describedby="discount-error" enterkeyhint="done"><span>% OFF</span></div></div><p id="discount-error" class="field-error" hidden></p><div class="presets" role="group" aria-label="よく使う割引率"><button type="button" data-discount="10" aria-pressed="false">10<span>%</span></button><button type="button" data-discount="20" aria-pressed="true">20<span>%</span></button><button type="button" data-discount="30" aria-pressed="false">30<span>%</span></button><button type="button" data-discount="50" aria-pressed="false">50<span>%</span></button></div></div>
+            <div class="tax-row"><span id="tax-label">消費税率</span><div class="tax-switch" role="group" aria-labelledby="tax-label"><button type="button" data-tax="8" aria-pressed="false">8<span>%</span></button><button type="button" data-tax="10" aria-pressed="true">10<span>%</span></button></div></div>
+            <label class="rounding-option" for="truncate"><span><strong>1,000円未満を切り捨て</strong><span>最終的な税込額に適用します</span></span><input type="checkbox" id="truncate"><span class="toggle" aria-hidden="true"></span></label>
+            <p id="rounding-example" class="rounding-example">例：8,640円 → 8,000円。税の内訳も再計算。</p>
+            <button type="button" id="reset-button" class="reset-button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg>入力をクリア</button>
+          </form>
+        </section>
+        <div class="result-column">
+          <section class="result-card" aria-label="計算結果" aria-live="polite" aria-atomic="true">
+            <div class="result-topline"><p id="result-title">割引後のお支払い</p><span class="result-badge">税込</span></div>
+            <p class="total"><span id="result-gross">8,000</span><span class="yen">円</span></p>
+            <p id="result-context" class="result-context">10,000円から20% OFF</p>
+            <div class="receipt-divider"></div>
+            <dl class="breakdown"><div><dt>税抜金額</dt><dd><span id="result-net">7,273</span><span>円</span></dd></div><div><dt>うち消費税 <span id="result-tax-rate" class="tax-rate-tag">10%</span></dt><dd><span id="result-tax">727</span><span>円</span></dd></div></dl>
+            <div id="savings-box" class="savings-box"><span class="savings-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg>おトクになった金額</span><span class="saving-value"><span id="result-savings">2,000</span><small>円</small></span></div>
+            <p id="truncation-note" class="truncation-note" hidden></p>
+            <p id="result-invalid" class="result-invalid" hidden>金額を入力すると、ここに結果が表示されます。</p>
+          </section>
+          <div class="reassurance"><span class="reassurance-icon" aria-hidden="true">✓</span><p>入力するたび、すぐに計算。<br><span>計算内容が外部に送信されることはありません。</span></p></div>
+          <details class="calculation-notes"><summary>計算と端数処理について<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div><p>通常は1円未満を四捨五入します。税込入力では割引後の税込額を、税抜入力では割引後の税抜額、その税込額の順に四捨五入します。</p><p>税込額から求める税抜額は「税込額 ÷（1＋税率）」を四捨五入。消費税額は税込額との差額です。税抜入力では、割引後の税抜額をそのまま使います。</p><p>切り捨てをONにすると、最終税込額の1,000円未満を切り捨て、その額から税抜額・消費税額を再計算します。1,000円未満の金額は0円になります。</p><p>節約額は元の税込額との差です（切り捨て分を含む）。店舗の端数処理により、実際の金額と異なる場合があります。</p></div></details>
+        </div>
+      </div>
+    </main>
+    <footer><span>ぴたっと計算</span><span id="connection-status"><i></i>オフライン準備中</span></footer>
+  </div>
+  <dialog id="install-dialog" aria-labelledby="install-title"><form method="dialog"><button class="dialog-close" aria-label="閉じる">×</button></form><img src="./assets/icon.svg" width="64" height="64" alt=""><h2 id="install-title">いつもの計算を、<br>ホーム画面に。</h2><p>アプリのように、アイコンからすぐ開けます。</p><ol><li><strong>iPhone・iPad（Safari）</strong><br>共有メニュー →「ホーム画面に追加」</li><li><strong>Android（Chrome）</strong><br>メニュー →「ホーム画面に追加」または「アプリをインストール」</li></ol><p class="dialog-note">初回読み込みが完了するとオフラインでも使えます。表示される項目はブラウザにより異なります。</p><form method="dialog"><button class="dialog-done">わかりました</button></form></dialog>
+  <noscript><p class="noscript">計算を使うには、ブラウザのJavaScriptを有効にしてください。</p></noscript>
+</body>
+</html>
